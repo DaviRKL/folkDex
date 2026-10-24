@@ -49,7 +49,7 @@ export function UserTable({ users }: UserTableProps) {
                 <td className="py-4 px-4">
                   <Link 
                     to={`/profile/${user.login.uuid}`} 
-                    className="text-primary hover:text-white font-medium transition-colors"
+                    className="text-primary hover:text-grey-200 font-medium transition-colors"
                   >
                     {t('table.viewProfile')}
                   </Link>

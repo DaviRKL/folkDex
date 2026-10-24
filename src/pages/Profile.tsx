@@ -25,7 +25,7 @@ export function Profile() {
   if (!user) {
     return (
       <div className="min-h-screen p-6 md:p-12 flex flex-col items-center">
-        <h2 className="text-xl text-white mb-4">Usuário não encontrado.</h2>
+        <h2 className="text-xl text-grey-200 mb-4">Usuário não encontrado.</h2>
         <button onClick={() => navigate('/')} className="text-primary hover:underline">
           Voltar para a Home
         </button>
@@ -40,7 +40,7 @@ export function Profile() {
   // Componente interno para padronizar a renderização dos campos e manter o Clean Code
   const ProfileField = ({ label, value }: { label: string; value: string | number }) => (
     <div className="mb-5">
-      <p className="font-bold text-white mb-1 text-sm">{label}</p>
+      <p className="font-bold text-grey-300 mb-1 text-sm">{label}</p>
       <p className="text-grey-400 text-sm">{value}</p>
     </div>
   );
@@ -50,7 +50,7 @@ export function Profile() {
       {/* Botão de Voltar */}
       <button
         onClick={() => navigate(-1)}
-        className="text-grey-400 hover:text-white flex items-center gap-2 transition-colors absolute top-6 md:top-12 left-6 md:left-12"
+        className="text-grey-400 hover:text-grey-200 flex items-center gap-2 transition-colors absolute top-6 md:top-12 left-6 md:left-12"
       >
         <span>&larr;</span> {t('profile.back')}
       </button>
@@ -62,7 +62,7 @@ export function Profile() {
           alt={`${user.name.first} ${user.name.last}`}
           className="w-32 h-32 rounded-full mb-4 object-cover"
         />
-        <h1 className="text-2xl font-bold text-white">
+        <h1 className="text-2xl font-bold text-grey-200">
           {user.name.first} {user.name.last}
         </h1>
         <p className="text-grey-400">{user.name.title}</p>
@@ -76,7 +76,7 @@ export function Profile() {
             onClick={() => setActiveTab(tab)}
             className={`pb-2 px-2 capitalize font-medium transition-colors ${
               activeTab === tab
-                ? 'text-white border-b-2 border-primary'
+                ? 'text-grey-200 border-b-2 border-primary'
                 : 'text-grey-500 hover:text-grey-300'
             }`}
           >

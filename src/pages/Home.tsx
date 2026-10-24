@@ -13,7 +13,7 @@ export function Home() {
 
   return (
     <div className="min-h-screen p-6 md:p-12 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mt-4 mb-8 text-white">{t('findPeople')}</h1>
+      <h1 className="text-3xl font-bold mt-4 mb-8 text-grey-200">{t('findPeople')}</h1>
       
       {/* Componente de Busca Reativa */}
       <SearchInput />
@@ -42,7 +42,7 @@ export function Home() {
       {/* Empty State: Nenhum resultado encontrado */}
       {!loading && !error && paginatedUsers.length === 0 && (
         <div className="flex flex-col items-center justify-center mt-24 text-center">
-          <h2 className="text-2xl font-bold text-white mb-3">{t('noResults')}</h2>
+          <h2 className="text-2xl font-bold text-grey-200 mb-3">{t('noResults')}</h2>
           <p className="text-grey-400 text-sm">{t('tryAgain')}</p>
         </div>
       )}
