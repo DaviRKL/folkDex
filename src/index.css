@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Habilita a troca de tema baseada na classe 'dark' no <html> */
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: var(--primary);
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-grey-200: var(--grey-200);
+  /* Adicione as outras variáveis de cinza aqui seguindo a mesma lógica */
+}
+
+@layer base {
+  :root {
+    /* Tema Claro */
+    --primary: #9333ea;
+    --bg: #f3f4f6;
+    --surface: #ffffff;
+    --grey-200: #374151;
+  }
+
+  .dark {
+    /* Tema Escuro (Padrão do Protótipo) */
+    --primary: #9333ea;
+    --bg: #121212;
+    --surface: #1e1e1e;
+    --grey-200: #e5e7eb;
+  }
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--grey-200);
+  @apply transition-colors duration-300 antialiased;
+}
