@@ -1,13 +1,13 @@
 // src/contexts/UsersContext.tsx
-import { createContext, useContext, useEffect, useState, useMemo } from 'react';
-import type { ReactNode } from 'react';
-import type { User } from '../types';
-import { fetchUsers } from '../services/api';
-import { useUrlFilters } from '../hooks/useUrlFilters';
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import type { User } from "../types";
+import type { ReactNode } from "react";
+import { fetchUsers } from "../services/api";
+import { useUrlFilters } from "../hooks/useUrlFilters";
 
 interface UsersContextData {
-  users: User[]; // Todos os 200
-  paginatedUsers: User[]; // Os 10 da página atual
+  users: User[];
+  paginatedUsers: User[];
   loading: boolean;
   error: string | null;
   totalPages: number;
@@ -20,8 +20,9 @@ export function UsersProvider({ children }: { children: ReactNode }) {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  const { search, age, page } = useUrlFilters();
+
+  // Recebemos o novo parâmetro searchBy
+  const { search, searchBy, page } = useUrlFilters();
 
   useEffect(() => {
     async function loadUsers() {
@@ -29,7 +30,7 @@ export function UsersProvider({ children }: { children: ReactNode }) {
         const data = await fetchUsers();
         setUsers(data);
       } catch (err) {
-        setError('Ocorreu um erro ao carregar os dados:' + (err as Error).message);
+        setError("Ocorreu um erro ao carregar os dados.");
       } finally {
         setLoading(false);
       }
@@ -37,29 +38,64 @@ export function UsersProvider({ children }: { children: ReactNode }) {
     loadUsers();
   }, []);
 
-  // Filtra reativamente (RN2 e RN3) apenas quando a lista, busca ou idade mudarem
   const filteredUsers = useMemo(() => {
-    return users.filter(user => {
-      const fullName = `${user.name.first} ${user.name.last}`.toLowerCase();
-      const matchSearch = search ? fullName.includes(search.toLowerCase()) : true;
-      const matchAge = age ? user.dob.age.toString() === age : true;
-      
-      return matchSearch && matchAge;
-    });
-  }, [users, search, age]);
+    const searchTerm = search.toLowerCase();
 
-  // RN1: Paginação no client-side (10 por página)
+    return users.filter((user) => {
+      if (!searchTerm) return true; // Se o input estiver vazio, retorna todos
+
+      const shortId = user.login.uuid.substring(0, 12).toLowerCase();
+      const fullId = user.login.uuid.toLowerCase();
+      const firstName = user.name.first.toLowerCase();
+      const lastName = user.name.last.toLowerCase();
+      const title = user.name.title.toLowerCase();
+      const formattedDate = new Date(user.dob.date).toLocaleDateString("pt-BR");
+      const ageStr = user.dob.age.toString();
+
+      // Aplica o filtro estritamente na coluna selecionada
+      switch (searchBy) {
+        case "id":
+          return shortId.includes(searchTerm) || fullId.includes(searchTerm);
+        case "firstName":
+          return firstName.includes(searchTerm);
+        case "lastName":
+          return lastName.includes(searchTerm);
+        case "title":
+          return title.includes(searchTerm);
+        case "date":
+          return formattedDate.includes(searchTerm);
+        case "age":
+          return ageStr === searchTerm; // Correspondência exata para evitar que "8" retorne "88"
+        case "all":
+        default:
+          return (
+            shortId.includes(searchTerm) ||
+            fullId.includes(searchTerm) ||
+            firstName.includes(searchTerm) ||
+            lastName.includes(searchTerm) ||
+            title.includes(searchTerm) ||
+            formattedDate.includes(searchTerm) ||
+            ageStr === searchTerm
+          );
+      }
+    });
+  }, [users, search, searchBy]);
+
   const ITEMS_PER_PAGE = 10;
   const totalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE);
-  const paginatedUsers = filteredUsers.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+  const paginatedUsers = filteredUsers.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE,
+  );
 
-  // Função para a tela de Perfil (RF3) resgatar o usuário sem precisar fazer novo fetch
   const getUserById = (uuid: string) => {
-    return users.find(user => user.login.uuid === uuid);
+    return users.find((user) => user.login.uuid === uuid);
   };
 
   return (
-    <UsersContext.Provider value={{ users, paginatedUsers, loading, error, totalPages, getUserById }}>
+    <UsersContext.Provider
+      value={{ users, paginatedUsers, loading, error, totalPages, getUserById }}
+    >
       {children}
     </UsersContext.Provider>
   );

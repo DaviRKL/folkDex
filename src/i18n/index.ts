@@ -7,8 +7,9 @@ const resources = {
   en: {
     translation: {
       findPeople: "Find People",
-      searchPlaceholder: "Search people....",
+      searchPlaceholder: "Search people by ID, Name, Last Name, Title, Birth Date or Age....",
       table: {
+        choose: "Choose a filter",
         id: "ID",
         firstName: "First Name",
         lastName: "Last Name",
@@ -31,8 +32,9 @@ const resources = {
   pt: {
     translation: {
       findPeople: "Encontrar Pessoas",
-      searchPlaceholder: "Pesquisar pessoas....",
+      searchPlaceholder: "Pesquise as pessoas pelo ID, Nome, Sobrenome, Título, Data de Nascimento ou Idade....",
       table: {
+        choose: "Escolha um filtro",
         id: "ID",
         firstName: "Nome",
         lastName: "Sobrenome",
