@@ -34,7 +34,7 @@ O desafio original propunha a criação de uma interface de listagem e perfil de
 
 Para garantir uma aplicação performática, escalável e com excelente UX, a arquitetura foi expandida para além dos requisitos básicos, focando em princípios de Clean Code e componentização reutilizável:
 
-*   **Paginação e Filtros Client-Side Otimizados:** Como a Random User API não suporta filtros nativos consistentes para paginação e busca simultânea, implementamos uma arquitetura onde 200 usuários são cacheados no `UsersContext` na montagem. Toda paginação e filtragem ocorre na memória usando `useMemo`, eliminando requisições redundantes de rede e garantindo uma interface extremamente rápida.
+*   **Paginação e Filtros Client-Side Otimizados:** Como a Random User API não suporta filtros nativos consistentes para paginação e busca simultânea, implementei uma arquitetura onde 200 usuários são cacheados no `UsersContext` na montagem. Toda paginação e filtragem ocorre na memória usando `useMemo`, eliminando requisições redundantes de rede e garantindo uma interface extremamente rápida.
 *   **Filtro Específico e Omni-Search:** Resolução do bug comum de colisão de dados (ex: pesquisar pela idade "88" e retornar um ID alfanumérico que contenha "88"). O usuário possui um `select` para buscar globalmente ou isolar a pesquisa em uma coluna exata.
 *   **State-Syncing na URL:** Os filtros de texto, a categoria de busca e a página atual são sincronizados em tempo real com a URL (`?searchBy=age&search=30&page=2`). Isso permite que os usuários compartilhem links que restauram o estado exato da aplicação.
 *   **Internacionalização (i18n):** Suporte completo para Português (PT-BR) e Inglês (EN-US) utilizando `react-i18next`, com detecção automática do idioma do navegador.
