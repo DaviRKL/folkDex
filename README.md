@@ -1,4 +1,4 @@
-# 📇 folkDex | People Discovery
+# 📇 folkDex 
 
 > Resolução do **React Challenge 001** da plataforma [Code Challenges](https://codechallenges.com.br).
 
