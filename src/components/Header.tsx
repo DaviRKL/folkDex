@@ -35,8 +35,8 @@ export function Header() {
   return (
     <header className="w-full bg-surface py-4 px-6 md:px-12 flex justify-between items-center shadow-sm transition-colors duration-300">
       {/* Logo alinhada à esquerda */}
-      <Link to="/" className="text-2xl font-bold text-primary hover:opacity-80 transition-opacity">
-        folkDex
+      <Link to="/" className="hover:opacity-80 transition-opacity" aria-label="FolkDex">
+        <img src="/logo/folkDex.png" alt="FolkDex" className="h-12 w-auto" />
       </Link>
 
       {/* Controles alinhados à direita */}

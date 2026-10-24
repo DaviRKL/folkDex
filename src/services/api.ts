@@ -8,17 +8,16 @@ export async function fetchUsers(): Promise<User[]> {
     throw new Error('Falha ao buscar usuários');
   }
 
-  const data = await response.json();
+  const data: ApiResponse = await response.json();
 
   // RF5: Limpeza de dados sensíveis antes de enviar para o Contexto
-  const safeUsers = data.results.map((user: any) => {
-    delete user.login.password;
-    delete user.login.salt;
-    delete user.login.md5;
-    delete user.login.sha1;
-    delete user.login.sha256;
-    return user as User;
-  });
+  const safeUsers: User[] = data.results.map(({ login, ...user }) => ({
+    ...user,
+    login: {
+      uuid: login.uuid,
+      username: login.username,
+    },
+  }));
 
   return safeUsers;
 }
