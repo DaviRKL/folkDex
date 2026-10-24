@@ -56,3 +56,9 @@ Para garantir uma aplicação performática, escalável e com excelente UX, a ar
 ---
 
 ## 🖼️ Figma 
+
+- https://www.figma.com/design/d7tffwO8l1hXxjH8fxdaZH/Desafio-Frontend---Find-People?node-id=0-1&t=r7XD5aFDWtZd49Bj-0
+
+## 🛜 Link para o projeto no ar
+
+- https://folkdex-davikonuma.vercel.app/
